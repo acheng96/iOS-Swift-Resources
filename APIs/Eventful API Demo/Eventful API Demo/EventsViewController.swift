@@ -147,8 +147,9 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let event = Event(id: eventID, url: eventURL, title: eventName, description: eventDescription, address: eventAddress,time: eventTime, venueURL: venueURL, venueName: venueName, imageURL: eventImageURL, geocoordinates: geocoordinates)
                 
                 self.eventsArray.append(event)
-                completion(finished: true)
             }
+            
+            completion(finished: true)
         }
     }
     
