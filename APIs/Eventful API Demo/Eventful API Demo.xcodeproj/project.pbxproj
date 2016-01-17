@@ -207,8 +207,8 @@
 		D1E8EE1F1C4B944800D37995 /* Swift Files */ = {
 			isa = PBXGroup;
 			children = (
-				D153D38F1C49EE63001DA6C5 /* EventTableViewCell.swift */,
 				D1E8EE1B1C4B944100D37995 /* CategoryTableViewCell.swift */,
+				D153D38F1C49EE63001DA6C5 /* EventTableViewCell.swift */,
 			);
 			name = "Swift Files";
 			sourceTree = "<group>";
@@ -216,8 +216,8 @@
 		D1E8EE201C4B944E00D37995 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				D153D3901C49EE63001DA6C5 /* EventTableViewCell.xib */,
 				D1E8EE1C1C4B944100D37995 /* CategoryTableViewCell.xib */,
+				D153D3901C49EE63001DA6C5 /* EventTableViewCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";

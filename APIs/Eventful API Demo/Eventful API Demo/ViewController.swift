@@ -42,8 +42,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Set up table view
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = 44.0
-        tableView.estimatedRowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 60.0
+        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.registerNib(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
         
         loadCategories()

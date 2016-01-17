@@ -40,8 +40,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Set up table view
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = 125.0
-        tableView.estimatedRowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 125.0
+        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
     }
     
