@@ -18,7 +18,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var dateFormatter: NSDateFormatter!
     var numMilesRadius: Int = 20
     var userLocationCoordinate: String!
-    var eventsPageNumber: Int = 0
+    var eventsPageNumber: Int = 1
+    var eventsPageSize: Int = 10
     
     // Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -43,13 +44,11 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.estimatedRowHeight = 125.0
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        eventsArray = []
-        eventsPageNumber = 0
+        
         loadEvents()
     }
+    
+    // MARK: JSON Parsing Methods
     
     func loadEvents() {
         let rootURL = EventfulAPIStrings.EventsAPIRoot
@@ -59,16 +58,21 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let sortOrder = EventfulAPIStrings.SortOrder + "date"
         let category = EventfulAPIStrings.Category + categoryID
         let within = EventfulAPIStrings.Within + String(numMilesRadius)
+        let pageSize = EventfulAPIStrings.PageSize + String(eventsPageSize)
         let pageNumber = EventfulAPIStrings.PageNumber + String(eventsPageNumber)
-        let eventsURL = NSURL(string: rootURL + appKey + location + date + sortOrder + category + within + pageNumber)
+        let eventsURL = NSURL(string: rootURL + appKey + location + date + sortOrder + category + within + pageSize + pageNumber)
         
-        getEvents(eventsURL!)
+        getEvents(eventsURL!) { (finished) -> Void in
+            if finished {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
+            }
+        }
     }
     
-    // MARK: JSON Parsing Methods
-    
-    func getEvents(url: NSURL) {
-        DataManager.getDataFromURL(url) { (data) -> Void in
+    func getEvents(url: NSURL, completion: (finished: Bool) -> Void) {
+        DataManager.getDataFromURL(url) { (success, data) -> Void in
             let json = JSON(data: data)
             let events = json["events"]["event"]
             
@@ -82,7 +86,7 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 var eventStopTime = events[i]["stop_time"].string ?? ""
                 var eventTime = ""
                 let eventImageURL = events[i]["image"]["url"].string ?? ""
-    
+                
                 let venueURL = events[i]["venue_url"].string ?? ""
                 let venueDisplay = events[i]["venue_display"].string ?? ""
                 let venueName = (venueDisplay == "0") ? (events[i]["venue_name"].string ?? "") : ""
@@ -133,10 +137,9 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let event = Event(id: eventID, url: eventURL, title: eventName, description: eventDescription, address: eventAddress,time: eventTime, venueURL: venueURL, venueName: venueName, imageURL: eventImageURL, geocoordinates: geocoordinates)
                 
                 self.eventsArray.append(event)
+                completion(finished: true)
             }
-            
-            self.tableView.reloadData()
-        } 
+        }
     }
     
     // MARK: Table View Methods
@@ -164,7 +167,7 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.eventAddressLabel.text = eventsArray[indexPath.row].eventAddress
         cell.dateLabel.text = eventsArray[indexPath.row].eventTime
         
-        if indexPath.row == (eventsArray.count - 1) {
+        if indexPath.row == ((eventsPageSize * eventsPageNumber) - 5) {
             eventsPageNumber++
             loadEvents()
         }

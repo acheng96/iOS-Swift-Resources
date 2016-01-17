@@ -49,14 +49,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         loadCategories()
     }
     
-    func loadCategories() {
-        let rootURL = EventfulAPIStrings.CategoriesAPIRoot
-        let appKey = EventfulAPIStrings.AppKey
-        let categoriesURL = NSURL(string: rootURL + appKey)
-        
-        getCategories(categoriesURL!)
-    }
-    
     // MARK: User Location Methods
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -67,20 +59,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: JSON Parsing Methods
     
-    func getCategories(url: NSURL) {
-        DataManager.getDataFromURL(url) { (data) -> Void in
-            let json = JSON(data: data)
-            let categories = json["category"]
-            
-            for (var i = 0; i < categories.count; i++) {
-                let categoryName = categories[i]["name"].string ?? ""
-                let editedCategoryName = categoryName.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
-                let categoryID = categories[i]["id"].string ?? ""
-                self.categories.append(editedCategoryName)
-                self.categoryIDs.append(categoryID)
+    func loadCategories() {
+        let rootURL = EventfulAPIStrings.CategoriesAPIRoot
+        let appKey = EventfulAPIStrings.AppKey
+        let categoriesURL = NSURL(string: rootURL + appKey)
+        
+        getCategories(categoriesURL!) { (finished) -> Void in
+            if finished {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
+                
             }
-            
-            self.tableView.reloadData()
+        }
+    }
+    
+    func getCategories(url: NSURL, completion: (finished: Bool) -> Void) {
+        DataManager.getDataFromURL(url) { (success, data) -> Void in
+            if success {
+                let json = JSON(data: data)
+                let categories = json["category"]
+                
+                for (var i = 0; i < categories.count; i++) {
+                    let categoryName = categories[i]["name"].string ?? ""
+                    let editedCategoryName = categoryName.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+                    let categoryID = categories[i]["id"].string ?? ""
+                    self.categories.append(editedCategoryName)
+                    self.categoryIDs.append(categoryID)
+                }
+                
+                completion(finished: true)
+            }
         }
     }
     
