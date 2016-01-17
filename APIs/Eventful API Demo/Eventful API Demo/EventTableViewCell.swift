@@ -19,9 +19,6 @@ class EventTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         selectionStyle = .None
-        
-        eventImageView.layer.cornerRadius = eventImageView.frame.size.width / 2.0
-        eventImageView.layer.masksToBounds = true
     }
     
 }

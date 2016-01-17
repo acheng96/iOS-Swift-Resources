@@ -3,7 +3,7 @@
 //  Eventful API Demo
 //
 //  Created by Annie Cheng on 1/17/16.
-//  Copyright © 2016 OnO. All rights reserved.
+//  Copyright © 2016 Annie Cheng. All rights reserved.
 //
 
 import UIKit
@@ -16,6 +16,9 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var categoryID: String!
     var eventsArray: [Event] = []
     var dateFormatter: NSDateFormatter!
+    var numMilesRadius: Int = 20
+    var userLocationCoordinate: String!
+    var eventsPageNumber: Int = 0
     
     // Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -42,11 +45,23 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-        // Store events URL
+    override func viewDidAppear(animated: Bool) {
         eventsArray = []
-        let eventsURL = NSURL(string: "http://api.eventful.com/json/events/search?location=New%20York&category=\(categoryID)&date=future&app_key=LBC2sxCN4CpMSXtC")
+        eventsPageNumber = 0
+        loadEvents()
+    }
+    
+    func loadEvents() {
+        let rootURL = EventfulAPIStrings.EventsAPIRoot
+        let appKey = EventfulAPIStrings.AppKey
+        let location = EventfulAPIStrings.Location + userLocationCoordinate
+        let date = EventfulAPIStrings.Date + "future"
+        let sortOrder = EventfulAPIStrings.SortOrder + "date"
+        let category = EventfulAPIStrings.Category + categoryID
+        let within = EventfulAPIStrings.Within + String(numMilesRadius)
+        let pageNumber = EventfulAPIStrings.PageNumber + String(eventsPageNumber)
+        let eventsURL = NSURL(string: rootURL + appKey + location + date + sortOrder + category + within + pageNumber)
+        
         getEvents(eventsURL!)
     }
     
@@ -67,7 +82,7 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 var eventStopTime = events[i]["stop_time"].string ?? ""
                 var eventTime = ""
                 let eventImageURL = events[i]["image"]["url"].string ?? ""
-                
+    
                 let venueURL = events[i]["venue_url"].string ?? ""
                 let venueDisplay = events[i]["venue_display"].string ?? ""
                 let venueName = (venueDisplay == "0") ? (events[i]["venue_name"].string ?? "") : ""
@@ -77,8 +92,9 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let venuePostalCode = events[i]["postal_code"].string ?? ""
                 var eventAddress = "\(venueAddress), \(venueCity), \(venueRegion) \(venuePostalCode)"
                 
-                let longitude = events[i]["longitude"].string ?? ""
                 let latitude = events[i]["latitude"].string ?? ""
+                let longitude = events[i]["longitude"].string ?? ""
+                let geocoordinates = "\(latitude), \(longitude)"
                 
                 if eventAllDay == "0" { // Start time and stop time as listed
                     if !eventStartTime.isEmpty {
@@ -114,26 +130,13 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     eventAddress = "Please check venue website for address"
                 }
                 
-                let event = Event(id: eventID, url: eventURL, title: eventName, description: eventDescription, address: eventAddress,time: eventTime, venueURL: venueURL, venueName: venueName, imageURL: eventImageURL)
-                
-                //                print("Event ID: \(eventID)")
-                //                print("Event URL: \(eventURL)")
-                //                print("Event Name: \(eventName)")
-                //                print("Event Description: \(eventDescription)")
-                //                print("Event Address: \(eventAddress)")
-                //                print("Event Time: \(eventTime)")
-                //                print("Venue URL: \(venueURL)")
-                //                print("Venue Name: \(venueName)")
-                //                print("Longitude: \(longitude)")
-                //                print("Latitude: \(latitude)")
+                let event = Event(id: eventID, url: eventURL, title: eventName, description: eventDescription, address: eventAddress,time: eventTime, venueURL: venueURL, venueName: venueName, imageURL: eventImageURL, geocoordinates: geocoordinates)
                 
                 self.eventsArray.append(event)
             }
             
             self.tableView.reloadData()
-        }
-        
-        
+        } 
     }
     
     // MARK: Table View Methods
@@ -160,6 +163,11 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.eventNameLabel.text = eventsArray[indexPath.row].eventTitle
         cell.eventAddressLabel.text = eventsArray[indexPath.row].eventAddress
         cell.dateLabel.text = eventsArray[indexPath.row].eventTime
+        
+        if indexPath.row == (eventsArray.count - 1) {
+            eventsPageNumber++
+            loadEvents()
+        }
         
         return cell
     }

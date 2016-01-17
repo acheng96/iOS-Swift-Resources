@@ -14,9 +14,11 @@ class DataManager {
     // MARK: Get Image from URL Methods
     
     class func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            completion(data: data, response: response, error: error)
-            }.resume()
+        dispatch_async(dispatch_get_main_queue(), {
+            NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+                completion(data: data, response: response, error: error)
+                }.resume()
+        })
     }
     
     class func downloadImage(url: NSURL, completion: (success: Bool, image: UIImage?) -> Void) {
@@ -46,17 +48,17 @@ class DataManager {
     }
     
     class func loadDataFromURL(url: NSURL, completion:(data: NSData?, error: NSError?) -> Void) {
-        let session = NSURLSession.sharedSession()
-        
-        let dataTask = session.dataTaskWithURL(url, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            if let responseError = error {
-                completion(data: nil, error: responseError)
-            } else {
-                completion(data: data, error: nil)
-            }
+        dispatch_async(dispatch_get_main_queue(), {
+            let dataTask = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                if let responseError = error {
+                    completion(data: nil, error: responseError)
+                } else {
+                    completion(data: data, error: nil)
+                }
+            })
+            
+            dataTask.resume()
         })
-        
-        dataTask.resume()
     }
     
 }

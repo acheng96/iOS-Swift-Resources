@@ -12,8 +12,9 @@ import UIKit
 struct EventfulAPIStrings {
     
     // Eventful API URL Strings
-    static let APIRoot = "http://api.eventful.com/json/events/search?"
-    static let APIKey = "app_key=sKJBRSh6NMPR3KDz"
+    static let CategoriesAPIRoot = "http://api.eventful.com/json/categories/list?"
+    static let EventsAPIRoot = "http://api.eventful.com/json/events/search?"
+    static let AppKey = "app_key=sKJBRSh6NMPR3KDz"
     static let Keyword = "&keywords="
     static let Location = "&location="
     static let Date = "&date="
@@ -56,8 +57,9 @@ class Event: NSObject {
     var venue_url: String!
     var venueName: String!
     var imageURL: String!
+    var geocoordinates: String!
     
-    init(id: String, url: String, title: String, description: String, address: String, time: String, venueURL: String, venueName: String, imageURL: String) {
+    init(id: String, url: String, title: String, description: String, address: String, time: String, venueURL: String, venueName: String, imageURL: String, geocoordinates: String) {
         self.eventID = id
         self.eventURL = url
         self.eventTitle = title
@@ -67,6 +69,7 @@ class Event: NSObject {
         self.venue_url = venueURL
         self.venueName = venueName
         self.imageURL = imageURL
+        self.geocoordinates = geocoordinates
     }
     
     override var description: String {

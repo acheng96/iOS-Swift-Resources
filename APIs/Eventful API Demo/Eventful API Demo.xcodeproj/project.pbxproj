@@ -22,6 +22,7 @@
 		D1E8EE1A1C4B92B800D37995 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8EE191C4B92B800D37995 /* EventsViewController.swift */; };
 		D1E8EE1D1C4B944100D37995 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8EE1B1C4B944100D37995 /* CategoryTableViewCell.swift */; };
 		D1E8EE1E1C4B944100D37995 /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1E8EE1C1C4B944100D37995 /* CategoryTableViewCell.xib */; };
+		D1E8EE221C4BA27700D37995 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E8EE211C4BA27700D37995 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		D1E8EE191C4B92B800D37995 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		D1E8EE1B1C4B944100D37995 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		D1E8EE1C1C4B944100D37995 /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
+		D1E8EE211C4BA27700D37995 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D54D002D204A094450821721 /* Pods-Eventful API Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eventful API Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eventful API Demo/Pods-Eventful API Demo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1E8EE221C4BA27700D37995 /* CoreLocation.framework in Frameworks */,
 				40419A83332D318F93EF4EA2 /* Pods_Eventful_API_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +99,7 @@
 		26E0A39B697D835CEE2C28FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1E8EE211C4BA27700D37995 /* CoreLocation.framework */,
 				CEDA517011142EAA8A21C449 /* Pods_Eventful_API_Demo.framework */,
 			);
 			name = Frameworks;

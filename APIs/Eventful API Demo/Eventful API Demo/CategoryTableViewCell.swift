@@ -3,7 +3,7 @@
 //  Eventful API Demo
 //
 //  Created by Annie Cheng on 1/17/16.
-//  Copyright © 2016 OnO. All rights reserved.
+//  Copyright © 2016 Annie Cheng. All rights reserved.
 //
 
 import UIKit

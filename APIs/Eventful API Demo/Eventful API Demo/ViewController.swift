@@ -8,12 +8,16 @@
 
 import UIKit
 import SwiftyJSON
+import MapKit
+import CoreLocation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     // Variables
+    var locationManager: CLLocationManager!
     var categories: [String] = []
     var categoryIDs: [String] = []
+    var userLocationCoordinate: String!
     
     // Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -25,9 +29,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         edgesForExtendedLayout = .None
         
-        // Store events URL
-        let categoriesURL = NSURL(string: "http://api.eventful.com/json/categories/list?app_key=LBC2sxCN4CpMSXtC")
-        getCategories(categoriesURL!)
+        // Get user's location
+        locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
 
         // Set up table view
         tableView.delegate = self
@@ -35,6 +45,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.rowHeight = 44.0
         tableView.estimatedRowHeight = UITableViewAutomaticDimension
         tableView.registerNib(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+        
+        loadCategories()
+    }
+    
+    func loadCategories() {
+        let rootURL = EventfulAPIStrings.CategoriesAPIRoot
+        let appKey = EventfulAPIStrings.AppKey
+        let categoriesURL = NSURL(string: rootURL + appKey)
+        
+        getCategories(categoriesURL!)
+    }
+    
+    // MARK: User Location Methods
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locationCoordinate: CLLocationCoordinate2D = manager.location!.coordinate
+        userLocationCoordinate = "\(locationCoordinate.latitude),\(locationCoordinate.longitude)"
+        locationManager.stopUpdatingLocation()
     }
     
     // MARK: JSON Parsing Methods
@@ -77,9 +105,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let cell = sender as? CategoryTableViewCell {
+            let indexPath = tableView.indexPathForCell(cell)
+            
             if segue.identifier == "goToEventsVC" {
                 let eventsVC = segue.destinationViewController as! EventsViewController
                 eventsVC.category = cell.categoryNameLabel.text
+                eventsVC.categoryID = categoryIDs[indexPath!.row]
+                eventsVC.userLocationCoordinate = userLocationCoordinate
             }
         }
     }
