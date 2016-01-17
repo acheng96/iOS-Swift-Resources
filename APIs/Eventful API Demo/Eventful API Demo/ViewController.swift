@@ -72,7 +72,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Set up table view
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = 90.0
+        tableView.rowHeight = 125.0
         tableView.estimatedRowHeight = UITableViewAutomaticDimension
         tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
     }
@@ -82,79 +82,85 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getEvents(url: NSURL) {
         DataManager.getDataFromURL(url) { (data) -> Void in
             let json = JSON(data: data)
+            let events = json["events"]["event"]
             
-            let eventName = json["events"]["event"][0]["title"].string ?? "Unnamed Event"
-            let eventDescription = json["events"]["event"][0]["description"].string ?? "No event description"
-            let eventAllDay = json["events"]["event"][0]["all_day"].string ?? ""
-            var eventStartTime = json["events"]["event"][0]["start_time"].string ?? ""
-            var eventStopTime = json["events"]["event"][0]["stop_time"].string ?? ""
-            var eventTime = "\(eventStartTime) - \(eventStopTime)"
-            var eventDate = ""
-            
-            let venueDisplay = json["events"]["event"][0]["venue_display"].string ?? ""
-            let venueName = (venueDisplay == "0") ? (json["events"]["event"][0]["venue_name"].string ?? "") : ""
-            let venueAddress = json["events"]["event"][0]["venue_address"].string ?? ""
-            let venueCity = json["events"]["event"][0]["city_name"].string ?? ""
-            let venueRegion = json["events"]["event"][0]["region_abbr"].string ?? ""
-            let venuePostalCode = json["events"]["event"][0]["postal_code"].string ?? ""
-            var eventAddress = "\(venueAddress), \(venueCity), \(venueRegion) \(venuePostalCode)"
-            
-            let eventURL = json["events"]["event"][0]["url"].string ?? ""
-            let venueURL = json["events"]["event"][0]["venue_url"].string ?? ""
-            
-            if eventAllDay == "0" { // Start time and stop time as listed
-                if !eventStartTime.isEmpty {
-                    self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let startDate = self.dateFormatter.dateFromString(eventStartTime)
-                    
-                    self.dateFormatter.dateFormat = "MMMM dd, yyyy"
-                    let startDateString = self.dateFormatter.stringFromDate(startDate!)
-                    eventDate = startDateString
-                    
-                    self.dateFormatter.dateFormat = "h:mm a"
-                    let startTimeString = self.dateFormatter.stringFromDate(startDate!)
-                    
-                    eventStartTime = startTimeString
-                }
+            for (var i = 0; i < events.count; i++) {
+                let eventID = events[i]["id"].string ?? ""
+                let eventURL = events[i]["url"].string ?? ""
+                let eventName = events[i]["title"].string ?? "Unnamed Event"
+                let eventDescription = events[i]["description"].string ?? "No event description"
+                let eventAllDay = events[i]["all_day"].string ?? ""
+                var eventStartTime = events[i]["start_time"].string ?? ""
+                var eventStopTime = events[i]["stop_time"].string ?? ""
+                var eventTime = ""
+                let eventImageURL = events[i]["image"]["url"].string ?? ""
                 
-                if !eventStopTime.isEmpty {
-                    self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let endDate = self.dateFormatter.dateFromString(eventStopTime)
-                    
-                    self.dateFormatter.dateFormat = "MMMM dd, yyyy"
-                    let endDateString = self.dateFormatter.stringFromDate(endDate!)
-                    print("end date: \(endDateString)")
-                    
-                    self.dateFormatter.dateFormat = "h:mm a"
-                    let endTimeString = self.dateFormatter.stringFromDate(endDate!)
-                    
-                    eventStopTime = endTimeString
-                }
+                let venueURL = events[i]["venue_url"].string ?? ""
+                let venueDisplay = events[i]["venue_display"].string ?? ""
+                let venueName = (venueDisplay == "0") ? (events[i]["venue_name"].string ?? "") : ""
+                let venueAddress = events[i]["venue_address"].string ?? ""
+                let venueCity = events[i]["city_name"].string ?? ""
+                let venueRegion = events[i]["region_abbr"].string ?? ""
+                let venuePostalCode = events[i]["postal_code"].string ?? ""
+                var eventAddress = "\(venueAddress), \(venueCity), \(venueRegion) \(venuePostalCode)"
                 
-                if !eventStartTime.isEmpty && eventStopTime.isEmpty {
-                    eventTime = "Starts \(eventStartTime)"
-                } else if (eventStartTime.isEmpty && eventStopTime.isEmpty) {
+                let longitude = events[i]["longitude"].string ?? ""
+                let latitude = events[i]["latitude"].string ?? ""
+                
+                if eventAllDay == "0" { // Start time and stop time as listed
+                    if !eventStartTime.isEmpty {
+                        self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let startDate = self.dateFormatter.dateFromString(eventStartTime)
+                        
+                        self.dateFormatter.dateFormat = "h:mm a E, MMM dd, yyyy"
+                        eventStartTime = self.dateFormatter.stringFromDate(startDate!)
+                    }
+                    
+                    if !eventStopTime.isEmpty {
+                        self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let endDate = self.dateFormatter.dateFromString(eventStopTime)
+                        
+                        self.dateFormatter.dateFormat = "h:mm a E, MMM dd, yyyy"
+                        eventStopTime = self.dateFormatter.stringFromDate(endDate!)
+                    }
+                    
+                    if (!eventStartTime.isEmpty && !eventStopTime.isEmpty) {
+                        eventTime = "from \(eventStartTime) to \(eventStopTime)"
+                    } else if (!eventStartTime.isEmpty && eventStopTime.isEmpty) {
+                        eventTime = "Starts \(eventStartTime)"
+                    } else if (eventStartTime.isEmpty && eventStopTime.isEmpty) {
+                        eventTime = "Please check venue website for time"
+                    }
+                } else if eventAllDay == "1" { // All day
+                    eventTime = "All Day"
+                } else { // No time specified
                     eventTime = "Please check venue website for time"
                 }
-            } else if eventAllDay == "1" { // All day
-                eventTime = "All Day"
-            } else { // No time specified
-                eventTime = "Please check venue website for time"
+                
+                if venueAddress.isEmpty || venueCity.isEmpty || venueRegion.isEmpty {
+                    eventAddress = "Please check venue website for address"
+                }
+                
+                let event = Event(id: eventID, url: eventURL, title: eventName, description: eventDescription, address: eventAddress,time: eventTime, venueURL: venueURL, venueName: venueName, imageURL: eventImageURL)
+                
+//                print("Event ID: \(eventID)")
+//                print("Event URL: \(eventURL)")
+//                print("Event Name: \(eventName)")
+//                print("Event Description: \(eventDescription)")
+//                print("Event Address: \(eventAddress)")
+//                print("Event Time: \(eventTime)")
+//                print("Venue URL: \(venueURL)")
+//                print("Venue Name: \(venueName)")
+//                print("Longitude: \(longitude)")
+//                print("Latitude: \(latitude)")
+                
+                self.eventsArray.append(event)
             }
             
-            if venueAddress.isEmpty || venueCity.isEmpty || venueRegion.isEmpty {
-                eventAddress = "Please check venue website for address"
-            }
-
-            print("Event Name: \(eventName)")
-            print("Event URL: \(eventURL)")
-            print("Event Description: \(eventDescription)")
-            print("Event Date: \(eventDate)")
-            print("Event Time: \(eventTime)")
-            print("Venue Name: \(venueName)")
-            print("Event Address: \(eventAddress)")
-            print("Venue URL: \(venueURL)")
+            self.tableView.reloadData()
         }
+        
+        
     }
     
     // MARK: Table View Methods
@@ -165,6 +171,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
+        
+        let imageURL = eventsArray[indexPath.row].imageURL
+        
+        if imageURL != "" {
+            DataManager.downloadImage(NSURL(string: imageURL)!, completion: { (success: Bool, image: UIImage?) -> Void in
+                if success {
+                    if let eventImage = image {
+                        cell.eventImageView.image = eventImage
+                    }
+                }
+            })
+        }
+        
+        cell.eventNameLabel.text = eventsArray[indexPath.row].eventTitle
+        cell.eventAddressLabel.text = eventsArray[indexPath.row].eventAddress
+        cell.dateLabel.text = eventsArray[indexPath.row].eventTime
         
         return cell
     }

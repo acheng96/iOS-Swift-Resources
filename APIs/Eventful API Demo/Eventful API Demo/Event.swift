@@ -11,20 +11,26 @@ import UIKit
 
 class Event: NSObject {
     
-    // Event Info
-    var eventID: String?
-    var eventURL: String?
-    var eventTitle: String?
-    var eventDescription: String?
-    var eventTime: String?
+    var eventID: String!
+    var eventURL: String!
+    var eventTitle: String!
+    var eventDescription: String!
+    var eventAddress: String!
+    var eventTime: String!
+    var venue_url: String!
+    var venueName: String!
+    var imageURL: String!
     
-    // Venue Info
-    var venue_url: String?
-    var venueName: String?
-    var venueAddress: String?
-    
-    init(name: String?, url: String?, title: String?, description: String?, eventTime: String?) {
-        
+    init(id: String, url: String, title: String, description: String, address: String, time: String, venueURL: String, venueName: String, imageURL: String) {
+        self.eventID = id
+        self.eventURL = url
+        self.eventTitle = title
+        self.eventDescription = description
+        self.eventAddress = address
+        self.eventTime = time
+        self.venue_url = venueURL
+        self.venueName = venueName
+        self.imageURL = imageURL
     }
     
     override var description: String {

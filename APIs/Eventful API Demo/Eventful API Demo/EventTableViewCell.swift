@@ -12,7 +12,7 @@ class EventTableViewCell: UITableViewCell {
     
     @IBOutlet weak var eventImageView: UIImageView!
     @IBOutlet weak var eventNameLabel: UILabel!
-    @IBOutlet weak var venueNameLabel: UILabel!
+    @IBOutlet weak var eventAddressLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
@@ -23,6 +23,5 @@ class EventTableViewCell: UITableViewCell {
         eventImageView.layer.cornerRadius = eventImageView.frame.size.width / 2.0
         eventImageView.layer.masksToBounds = true
     }
-
     
 }
