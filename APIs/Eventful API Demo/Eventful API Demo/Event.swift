@@ -9,6 +9,42 @@
 import Foundation
 import UIKit
 
+struct EventfulAPIStrings {
+    
+    // Eventful API URL Strings
+    static let APIRoot = "http://api.eventful.com/json/events/search?"
+    static let APIKey = "app_key=sKJBRSh6NMPR3KDz"
+    static let Keyword = "&keywords="
+    static let Location = "&location="
+    static let Date = "&date="
+    static let Category = "&category="
+    static let Within = "&within="
+    static let Units = "&units="
+    static let SortOrder = "&sort_order="
+    static let PageSize = "&page_size="
+    static let PageNumber = "&page_number="
+    
+    // Event API Strings
+    static let Event: String = "event"
+    static let EventID: String = "id"
+    static let EventURL: String = "url"
+    static let EventTitle: String = "title"
+    static let EventDescription: String = "description"
+    static let EventStartTime: String = "start_time"
+    static let EventStopTime: String = "stop_time"
+    static let EventAllDay: String = "all_day"
+    
+    // Venue API Strings
+    static let VenueURL: String = "venue_url"
+    static let VenueName: String = "venue_name"
+    static let VenueAddress: String = "venue_address"
+    static let VenueCity: String = "city_name"
+    static let VenueRegion: String = "region_abbr"
+    static let VenuePostalCode: String = "postal_code"
+    static let Latitude: String = "latitude"
+    static let Longitude: String = "longitude"
+}
+
 class Event: NSObject {
     
     var eventID: String!
