@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40419A83332D318F93EF4EA2 /* Pods_Eventful_API_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA517011142EAA8A21C449 /* Pods_Eventful_API_Demo.framework */; };
 		D153D3601C49E3B9001DA6C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153D35F1C49E3B8001DA6C5 /* AppDelegate.swift */; };
 		D153D3621C49E3B9001DA6C5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153D3611C49E3B9001DA6C5 /* ViewController.swift */; };
 		D153D3651C49E3B9001DA6C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D153D3631C49E3B9001DA6C5 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 		D153D38E1C49E469001DA6C5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153D38D1C49E469001DA6C5 /* Event.swift */; };
 		D153D3911C49EE63001DA6C5 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153D38F1C49EE63001DA6C5 /* EventTableViewCell.swift */; };
 		D153D3921C49EE63001DA6C5 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D153D3901C49EE63001DA6C5 /* EventTableViewCell.xib */; };
+		D1E8EE181C4B345F00D37995 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E8EE171C4B345F00D37995 /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C19D33E6656826278820F17D /* Pods-Eventful API Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eventful API Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eventful API Demo/Pods-Eventful API Demo.release.xcconfig"; sourceTree = "<group>"; };
+		CEDA517011142EAA8A21C449 /* Pods_Eventful_API_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eventful_API_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D153D35C1C49E3B8001DA6C5 /* Eventful API Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eventful API Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D153D35F1C49E3B8001DA6C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D153D3611C49E3B9001DA6C5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -53,6 +57,8 @@
 		D153D38D1C49E469001DA6C5 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		D153D38F1C49EE63001DA6C5 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		D153D3901C49EE63001DA6C5 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
+		D1E8EE171C4B345F00D37995 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		D54D002D204A094450821721 /* Pods-Eventful API Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eventful API Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eventful API Demo/Pods-Eventful API Demo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40419A83332D318F93EF4EA2 /* Pods_Eventful_API_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +87,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26E0A39B697D835CEE2C28FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEDA517011142EAA8A21C449 /* Pods_Eventful_API_Demo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2E62E6DF0BC7B1911F53D637 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D54D002D204A094450821721 /* Pods-Eventful API Demo.debug.xcconfig */,
+				C19D33E6656826278820F17D /* Pods-Eventful API Demo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D153D3531C49E3B8001DA6C5 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +111,8 @@
 				D153D3731C49E3B9001DA6C5 /* Eventful API DemoTests */,
 				D153D37E1C49E3B9001DA6C5 /* Eventful API DemoUITests */,
 				D153D35D1C49E3B8001DA6C5 /* Products */,
+				2E62E6DF0BC7B1911F53D637 /* Pods */,
+				26E0A39B697D835CEE2C28FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,14 +130,11 @@
 			isa = PBXGroup;
 			children = (
 				D153D35F1C49E3B8001DA6C5 /* AppDelegate.swift */,
-				D153D38D1C49E469001DA6C5 /* Event.swift */,
-				D153D3611C49E3B9001DA6C5 /* ViewController.swift */,
 				D153D3631C49E3B9001DA6C5 /* Main.storyboard */,
-				D153D38F1C49EE63001DA6C5 /* EventTableViewCell.swift */,
-				D153D3901C49EE63001DA6C5 /* EventTableViewCell.xib */,
-				D153D3661C49E3B9001DA6C5 /* Assets.xcassets */,
-				D153D3681C49E3B9001DA6C5 /* LaunchScreen.storyboard */,
-				D153D36B1C49E3B9001DA6C5 /* Info.plist */,
+				D1E8EE121C4B316500D37995 /* Models */,
+				D1E8EE141C4B318400D37995 /* View Controllers */,
+				D1E8EE111C4B315600D37995 /* Table View Cells */,
+				D1E8EE131C4B316E00D37995 /* Resources */,
 			);
 			path = "Eventful API Demo";
 			sourceTree = "<group>";
@@ -134,6 +157,42 @@
 			path = "Eventful API DemoUITests";
 			sourceTree = "<group>";
 		};
+		D1E8EE111C4B315600D37995 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D153D38F1C49EE63001DA6C5 /* EventTableViewCell.swift */,
+				D153D3901C49EE63001DA6C5 /* EventTableViewCell.xib */,
+			);
+			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		D1E8EE121C4B316500D37995 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D1E8EE171C4B345F00D37995 /* DataManager.swift */,
+				D153D38D1C49E469001DA6C5 /* Event.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		D1E8EE131C4B316E00D37995 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D153D3661C49E3B9001DA6C5 /* Assets.xcassets */,
+				D153D3681C49E3B9001DA6C5 /* LaunchScreen.storyboard */,
+				D153D36B1C49E3B9001DA6C5 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D1E8EE141C4B318400D37995 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D153D3611C49E3B9001DA6C5 /* ViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -141,9 +200,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D153D3841C49E3B9001DA6C5 /* Build configuration list for PBXNativeTarget "Eventful API Demo" */;
 			buildPhases = (
+				974216F09AFEF92B4C692D04 /* Check Pods Manifest.lock */,
 				D153D3581C49E3B8001DA6C5 /* Sources */,
 				D153D3591C49E3B8001DA6C5 /* Frameworks */,
 				D153D35A1C49E3B8001DA6C5 /* Resources */,
+				7A64E82A5AFE0D5253340544 /* Embed Pods Frameworks */,
+				5E6A1A00B9A7B5E50D86EADE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -261,12 +323,61 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5E6A1A00B9A7B5E50D86EADE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eventful API Demo/Pods-Eventful API Demo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A64E82A5AFE0D5253340544 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eventful API Demo/Pods-Eventful API Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		974216F09AFEF92B4C692D04 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D153D3581C49E3B8001DA6C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D153D3911C49EE63001DA6C5 /* EventTableViewCell.swift in Sources */,
+				D1E8EE181C4B345F00D37995 /* DataManager.swift in Sources */,
 				D153D3621C49E3B9001DA6C5 /* ViewController.swift in Sources */,
 				D153D38E1C49E469001DA6C5 /* Event.swift in Sources */,
 				D153D3601C49E3B9001DA6C5 /* AppDelegate.swift in Sources */,
@@ -409,6 +520,7 @@
 		};
 		D153D3851C49E3B9001DA6C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D54D002D204A094450821721 /* Pods-Eventful API Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Eventful API Demo/Info.plist";
@@ -420,6 +532,7 @@
 		};
 		D153D3861C49E3B9001DA6C5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C19D33E6656826278820F17D /* Pods-Eventful API Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Eventful API Demo/Info.plist";

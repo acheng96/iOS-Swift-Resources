@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class Event: NSObject {
+    
     // Event Info
     var eventID: String?
     var eventURL: String?
@@ -21,6 +22,10 @@ class Event: NSObject {
     var venue_url: String?
     var venueName: String?
     var venueAddress: String?
+    
+    init(name: String?, url: String?, title: String?, description: String?, eventTime: String?) {
+        
+    }
     
     override var description: String {
         return ("Title: \(eventTitle), Start Time: \(eventTime), Venue Name: \(venueName)")
