@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Categories-->
@@ -64,22 +65,41 @@
                                     <outlet property="delegate" destination="jBL-du-JII" id="ZKM-9a-mlj"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xL3-PQ-JiS">
+                                <rect key="frame" x="275" y="275" width="50" height="50"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hOP-8V-k6F">
+                                        <rect key="frame" x="15" y="15" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="hOP-8V-k6F" firstAttribute="centerX" secondItem="xL3-PQ-JiS" secondAttribute="centerX" id="TIQ-dQ-p8J"/>
+                                    <constraint firstAttribute="height" constant="50" id="n5s-dT-rxA"/>
+                                    <constraint firstAttribute="width" secondItem="xL3-PQ-JiS" secondAttribute="height" id="saR-PM-7Tt"/>
+                                    <constraint firstItem="hOP-8V-k6F" firstAttribute="centerY" secondItem="xL3-PQ-JiS" secondAttribute="centerY" id="wfd-Bt-d4h"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="IJ7-7S-QEA" firstAttribute="top" secondItem="D2R-T8-j1t" secondAttribute="bottom" id="BFu-in-OZm"/>
                             <constraint firstItem="D2R-T8-j1t" firstAttribute="top" secondItem="JCT-4h-XjI" secondAttribute="bottom" id="L7T-FT-2U9"/>
                             <constraint firstAttribute="trailing" secondItem="D2R-T8-j1t" secondAttribute="trailing" id="VzD-8D-bjl"/>
+                            <constraint firstItem="xL3-PQ-JiS" firstAttribute="centerX" secondItem="WF3-kg-UY4" secondAttribute="centerX" id="YcF-I4-LnN"/>
                             <constraint firstItem="D2R-T8-j1t" firstAttribute="leading" secondItem="WF3-kg-UY4" secondAttribute="leading" id="heN-YF-lQT"/>
+                            <constraint firstItem="xL3-PQ-JiS" firstAttribute="centerY" secondItem="WF3-kg-UY4" secondAttribute="centerY" id="z3L-RF-5b9"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="hOP-8V-k6F" id="6N4-nX-mAh"/>
+                        <outlet property="loadingView" destination="xL3-PQ-JiS" id="iNj-cT-KI7"/>
                         <outlet property="tableView" destination="D2R-T8-j1t" id="5sa-oc-nbC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rKv-Zo-mMv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1849" y="1054"/>
+            <point key="canvasLocation" x="1976" y="1057"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ygc-0q-Kb1">

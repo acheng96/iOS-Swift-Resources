@@ -23,6 +23,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // Outlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: View Lifecycle Methods
     
@@ -31,6 +33,12 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         edgesForExtendedLayout = .None
         navigationItem.title = category
+        
+        // Set up loading view
+        loadingView.layer.cornerRadius = 10
+        loadingView.layer.masksToBounds = true
+        loadingView.hidden = false
+        activityIndicator.startAnimating()
         
         // Set up date formatter
         dateFormatter = NSDateFormatter()
@@ -65,6 +73,8 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         getEvents(eventsURL!) { (finished) -> Void in
             if finished {
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.loadingView.hidden = true
+                    self.activityIndicator.stopAnimating()
                     self.tableView.reloadData()
                 })
             }
